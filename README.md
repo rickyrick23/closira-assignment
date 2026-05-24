@@ -42,6 +42,7 @@ To satisfy the evaluation criteria for system design and engineering ownership, 
 
 1. Database: SQLite vs. PostgreSQL
 Decision: SQLite with SQLAlchemy ORM.
+
 Rationale: The primary goal of this assignment is to evaluate backend fundamentals and API design. SQLite provides a zero-configuration experience, allowing reviewers to clone and run the app immediately without provisioning a local database server.
 Scalability Path: Because the data layer uses SQLAlchemy models, migrating to a production PostgreSQL environment simply requires updating the SQLALCHEMY_DATABASE_URL string and running standard Alembic migrations.
 
