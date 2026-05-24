@@ -44,15 +44,21 @@ To satisfy the evaluation criteria for system design and engineering ownership, 
 Decision: SQLite with SQLAlchemy ORM.
 
 Rationale: The primary goal of this assignment is to evaluate backend fundamentals and API design. SQLite provides a zero-configuration experience, allowing reviewers to clone and run the app immediately without provisioning a local database server.
+
 Scalability Path: Because the data layer uses SQLAlchemy models, migrating to a production PostgreSQL environment simply requires updating the SQLALCHEMY_DATABASE_URL string and running standard Alembic migrations.
 
 2. Async Processing: FastAPI BackgroundTasks vs. Celery
+
 Decision: FastAPI BackgroundTasks.
+
 Rationale: Introducing Celery requires a message broker (Redis/RabbitMQ) and running a separate worker process. For a local prototype, this introduces unnecessary setup friction. FastAPI's built-in BackgroundTasks executes in the same event loop but asynchronously after the HTTP response is returned, perfectly simulating the non-blocking behavior of the POST /enquiry endpoint.
+
 Trade-off: In a real production environment handling high-volume Closira webhooks (WhatsApp/Email), Celery + Redis is the superior choice. If the FastAPI application crashes in this prototype, pending in-memory background tasks are lost. Celery guarantees task persistence and handles automatic retries for failed SOP matching.
 
 3. Schema Design: Event-Sourced History
+
 Instead of simply updating a single mutable status string on an Enquiries table, I implemented an append-only HistoryEvent table with a foreign key back to the main enquiry.
+
 Rationale: This accurately reflects how production CRMs and ticketing systems operate. It naturally builds the audit trail required for the GET /enquiry/[id]/history endpoint, stores contextual metadata (like why an escalation happened) using a JSON column, and prevents data loss.
 
 --- Known Limitations ---
