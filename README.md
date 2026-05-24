@@ -13,7 +13,7 @@ Prerequisites
 Installation & Execution
 
 1. Clone the repository and navigate to the backend folder:
-git clone [your-repo-link]
+git clone (https://github.com/rickyrick23/closira-assignment)
 cd closira-assignment/backend
 2. Create and activate a virtual environment:
 On macOS/Linux:
