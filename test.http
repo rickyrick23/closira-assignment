@@ -1,0 +1,36 @@
+### 1. Health Check
+GET http://127.0.0.1:8000/health
+Accept: application/json
+
+### 2. Create a New Enquiry (Triggers "pricing_question" SOP)
+# @name createEnquiry
+POST http://127.0.0.1:8000/enquiry
+Content-Type: application/json
+
+{
+  "channel": "email",
+  "customer_name": "Jane Doe",
+  "message": "Hello, I would like to get a quote for a team of 10."
+}
+
+### 3. Get Enquiry History 
+# Note: Replace {id} with the job_id returned from the previous request
+GET http://127.0.0.1:8000/enquiry/{id}/history
+Accept: application/json
+
+### 4. Schedule a Follow-Up
+POST http://127.0.0.1:8000/enquiry/{id}/follow-up
+Content-Type: application/json
+
+{
+  "delay_minutes": 60,
+  "message_template": "Just checking in on the pricing we sent over."
+}
+
+### 5. Manual Escalation
+POST http://127.0.0.1:8000/enquiry/{id}/escalate
+Content-Type: application/json
+
+{
+  "reason": "Customer is requesting a custom enterprise tier."
+}
